@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة البصمة الكربونية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>حاسبة البصمة الكربونية</h2>
+        <label for="electricity">استهلاك الكهرباء (ك.و/س):</label>
+        <input type="number" id="electricity" placeholder="أدخل الاستهلاك بالكيلوواط">
+        <label for="gasoline">استهلاك البنزين (لتر):</label>
+        <input type="number" id="gasoline" placeholder="أدخل كمية البنزين باللتر">
+        <button onclick="calculateCarbonFootprint()">احسب البصمة الكربونية</button>
+        <h3 id="result"></h3>
+    </div>
+
+    <script>
+        function calculateCarbonFootprint() {
+            let electricity = parseFloat(document.getElementById("electricity").value) || 0;
+            let gasoline = parseFloat(document.getElementById("gasoline").value) || 0;
+            
+            let carbonFromElectricity = electricity * 0.5; // معامل التحويل للكهرباء (تقديري)
+            let carbonFromGasoline = gasoline * 2.3; // معامل التحويل للبنزين (تقديري)
+            
+            let totalCarbon = carbonFromElectricity + carbonFromGasoline;
+            
+            document.getElementById("result").innerText = "بصمتك الكربونية: " + totalCarbon.toFixed(2) + " كجم CO2";
+        }
+    </script>
+</body>
+</html>
