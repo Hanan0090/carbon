@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة البصمة الكربونية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            background: white;
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        button {
+            background: linear-gradient(45deg, #28a745, #218838);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        @media (max-width: 600px) {
+            .container { width: 90%; padding: 15px; }
+            input, button { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>حاسبة البصمة الكربونية</h2>
+        <label for="electricity"><i class="fas fa-bolt"></i> استهلاك الكهرباء (ك.و/س):</label>
+        <input type="number" id="electricity" placeholder="أدخل الاستهلاك بالكيلوواط">
+        <label for="gasoline"><i class="fas fa-gas-pump"></i> استهلاك البنزين (لتر):</label>
+        <input type="number" id="gasoline" placeholder="أدخل كمية البنزين باللتر">
+        <button onclick="calculateCarbonFootprint()">احسب البصمة الكربونية</button>
+        <h3 id="result"></h3>
+        <canvas id="carbonChart" width="200" height="200"></canvas>
+        <p style="color: #555; font-size: 14px;">كلما زادت البصمة الكربونية، زاد التأثير على البيئة. حاول تقليل استهلاكك للطاقة والوقود للمساعدة في الحفاظ على كوكبنا! 🌍</p>
+    </div>
+
+    <script>
+        function calculateCarbonFootprint() {
+            let electricity = parseFloat(document.getElementById("electricity").value) || 0;
+            let gasoline = parseFloat(document.getElementById("gasoline").value) || 0;
+
+            let carbonFromElectricity = electricity * 0.5;
+            let carbonFromGasoline = gasoline * 2.3;
+            let totalCarbon = carbonFromElectricity + carbonFromGasoline;
+
+            document.getElementById("result").innerText = "بصمتك الكربونية: " + totalCarbon.toFixed(2) + " كجم CO2";
+
+            let ctx = document.getElementById("carbonChart").getContext("2d");
+            new Chart(ctx, {
+                type: "doughnut",
+                data: {
+                    labels: ["كهرباء", "بنزين"],
+                    datasets: [{
+                        data: [carbonFromElectricity, carbonFromGasoline],
+                        backgroundColor: ["#FFA500", "#FF4500"]
+                    }]
+                }
+            });
+        }
+    </script>
+</body>
+</html>
